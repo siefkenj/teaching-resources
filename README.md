@@ -13,6 +13,6 @@ accompanying descriptions of how/when to use them.
 
 ## New Instructor Training Resources
 
-  - [Lesson Planning Worksheet](lesson-planning/lesson-planning.pdf)
+  - [Lesson Planning Worksheet](../../raw/main/lesson-planning/lesson-planning.pdf)
   - [Training Slides](training/2022-2022-new-instructor-training.pdf)
 
