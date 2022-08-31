@@ -1,0 +1,785 @@
+\documentclass{book}
+
+
+% pdfx will set color profile etc. information appropriately, so the pdf renders
+% consistently across devices. But, it doesn't work with the xelatex-based tectonics
+	\usepackage[utf8]{inputenc}
+
+%%%
+% import all needed packages and macros
+%%%
+
+%%
+%% All packages and macros needed for the problemsets
+%%
+
+\usepackage{amsmath}
+
+\usepackage{lipsum}
+%\usepackage{showframe}
+%\usepackage{layout}
+
+
+\usepackage[charter,cal=cmcal]{mathdesign} %different font
+%\usepackage{avant}
+
+\usepackage{microtype}
+\usepackage{mathtools}
+\usepackage{etoolbox}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage[inline]{enumitem}
+\usepackage{xparse}
+\usepackage{ifthen}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+	\usetikzlibrary{fit}
+	\usetikzlibrary{fadings}
+	\usetikzlibrary{calc}
+	\tikzset{>=latex}
+	\usetikzlibrary{cd}
+	\usetikzlibrary{spy}
+	\usetikzlibrary{patterns}
+\usepackage{fancyhdr}
+\usepackage{calc}
+\usepackage{wrapfig}
+\usepackage{marginnote}
+\usepackage{mparhack}
+\usepackage{marginfix}
+\usepackage{indextools}
+\usepackage[open=false]{bookmark}  % render the pdf TOC in the proper order
+\hypersetup{
+	hidelinks=true,
+	linkcolor = {0 0 1},
+	unicode=true,
+	psdextra=true,
+}
+\usepackage[margin=.5in, lmargin=1in, rmargin=1in]{geometry}
+\usepackage{tabularx}
+\usepackage{qrcode}
+
+
+%\usepackage[
+%  linktocpage=false,      % no page numbers are clickable
+%  colorlinks=false,       % no color
+%  breaklinks=true,        % break URLs
+%  bookmarks,              % creates bookmarks in pdf
+%  hyperfootnotes=true,    % clickable footnotes
+%  pdfborder={0 0 0},      % for removing borders around links
+%  bookmarksnumbered=true, % If Acrobat bookmarks are requested, include section numbers.
+%  bookmarksopen=false,    % If Acrobat bookmarks are requested, show them with all the subtrees expanded.
+%  %hidelinks=true,
+%  %linkcolor=blue,
+%  %citecolor=blue,
+%  %urlcolor=blue,
+%  pdfpagemode={UseOutlines}, % show pdf bookmarks (indices) on startup; does not function all the time
+%  pdftitle={...}, % title
+%  pdfauthor={...}, % author
+%  pdfkeywords={...}, % subject of the document
+%  pdfsubject={...}, % list of keywords
+%  pdfmenubar=true,        % make PDF viewer’s menu bar visible
+%  pdfpagelabels,
+%]{hyperref}
+%\usepackage[hidelinks,]{hyperref}
+\usepackage{fnpct} % fancy footnote spacing
+\usepackage{bm}
+\usepackage{systeme}
+\usepackage{datatool}% http://ctan.org/pkg/datatool for sorted lists
+\usepackage{xspace}
+\usepackage{multicol}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+	\usepgfplotslibrary{fillbetween}
+
+
+
+\newcommand{\addtoolboxitem}[4]{\subsubsection*{#1}\vspace{-.1cm} #2 \vspace{-.5cm}\paragraph{Variants:} #3 \vspace{-.5cm}\paragraph{Uses:} #4\par\noindent\rule{\linewidth}{0.4pt}}
+\newcommand{\enquote}[1]{``#1''}
+%%%
+% Useful Linear Algebra macros
+%%%
+\newcommand{\declarecommand}[1]{\providecommand{#1}{}\renewcommand{#1}}
+\declarecommand{\R}{\mathbb{R}}  % we don't care if it's already defined.  We really want *this* command!
+\declarecommand{\Z}{\mathbb{Z}}
+\declarecommand{\Q}{\mathbb{Q}}
+\declarecommand{\N}{\mathbb{N}}
+\declarecommand{\C}{\mathbb{C}}
+\declarecommand{\d}{\mathrm{d}}
+\declarecommand{\dd}{\mathbbm{d}} % exterior derivative
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Img}{img}
+\DeclareMathOperator{\Id}{id}
+\DeclareMathOperator{\Ident}{\Id}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\VolChange}{Vol\hspace{1.5pt}Change}
+\DeclareMathOperator{\Range}{range}
+\DeclareMathOperator{\Rref}{rref}
+\DeclareMathOperator{\Rank}{rank}
+\DeclareMathOperator{\Comp}{\Vcomp}
+\DeclareMathOperator{\Vcomp}{v\hspace{1pt}comp}
+\DeclareMathOperator{\Null}{null}
+\DeclareMathOperator{\Nullity}{nullity}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Proj}{proj}
+\DeclareMathOperator{\Flux}{Flux}
+\DeclareMathOperator{\Circ}{Circ}
+\DeclareMathOperator{\chr}{char}
+\DeclareMathOperator{\Dim}{dim}
+\DeclareMathOperator{\Perp}{perp}
+\DeclareMathOperator{\Ker}{kernel}
+\DeclareMathOperator{\Row}{row}
+\DeclareMathOperator{\Col}{col}
+\DeclareMathOperator{\Rep}{Rep}
+\newcommand{\BasisChange}[2]{[#2\!\leftarrow\!#1]}
+\newcommand{\proj}{\Proj}
+\newcommand{\rref}{\Rref}
+\newcommand{\xhat}{{\vec e_1}}
+\newcommand{\yhat}{{\vec e_2}}
+\newcommand{\zhat}{{\vec e_3}}
+\newcommand{\sbasis}[1]{\vec { e}_{#1}}
+\newcommand{\mat}[1]{\begin{bmatrix*}[r]#1\end{bmatrix*}}
+\newcommand{\matc}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\formarg}[2]{\big(#1;\, #2\big)}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\Abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\newcommand{\Norm}[1]{\norm{#1}}
+% just to make sure it exists
+\providecommand\given{}
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+	\nonscript\::%
+	\allowbreak
+	\nonscript\:
+	\mathopen{}}
+\DeclarePairedDelimiterX\Set[1]\{\}{%
+	\renewcommand\given{\SetSymbol[\delimsize]}
+	#1
+}
+\newcommand{\Rrefto}{\xrightarrow{\text{row reduces to}}}
+
+
+% redefine bmatrix,etc to allow optional argument for augmenting
+% code from https://tex.stackexchange.com/questions/2233/whats-the-best-way-make-an-augmented-coefficient-matrix
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newcommand{\scaledgrid}[1]{%
+	\begin{tikzpicture}[scale=#1]
+		\draw[thin, white!20!black, dotted] (-4.1,-4.1) grid (4.1,4.1);
+		\draw[ <->] (-4.3,0) -- (4.3,0);
+		\draw[ <->] (0,-4.3) -- (0,4.3);
+	\end{tikzpicture}
+}
+\newcommand{\scaledshortgrid}[1]{%
+	\begin{tikzpicture}[scale=#1]
+		\draw[thin, white!20!black, dotted] (-4.1,-2.1) grid (4.1,2.1);
+		\draw[ <->] (-4.3,0) -- (4.3,0);
+		\draw[ <->] (0,-2.3) -- (0,2.3);
+	\end{tikzpicture}
+}
+\newcommand{\singlegrid}{\scaledgrid{1}}
+\newcommand{\doublegrid}{\mbox{\scaledgrid{.9}\scaledgrid{.9}}\par}
+\newcommand{\triplegrid}{\mbox{\scaledgrid{.6}\scaledgrid{.6}\scaledgrid{.6}}\par}
+
+% labels for source attributions
+\NewDocumentCommand{\beezer}{o}{%
+	\IfNoValueTF{#1}{%
+		{\color{blue}\sffamily{B}}%
+	}{%
+		{\color{blue}\sffamily{B}}%  XXX Todo, make this href to the appropriate problem number
+	}\xspace%
+}
+\NewDocumentCommand{\hefferon}{o}{%
+	\IfNoValueTF{#1}{%
+		{\color{blue}\sffamily{H}}%
+	}{%
+		{\color{blue}\sffamily{H}}%  XXX Todo, make this href to the appropriate problem number
+	}\xspace%
+}
+
+\DeclareDocumentEnvironment{beforeyouread}{}{
+Before you read, make sure you are comfortable with the following.
+Please do the ``Quick Check'' problem to see if you are comfortable with each
+task.
+\begin{itemize}
+}{
+\end{itemize}
+}
+\newcommand\quickcheck[1]{\par {\footnotesize \textsc{Quick Check.} \textrm{#1}}}
+
+% Dummy, voidable environments
+\DeclareDocumentEnvironment{bookonly}{o}{}{}
+\DeclareDocumentEnvironment{displayonly}{o}{}{}
+
+
+
+%%
+% Allow hiding of environments
+%%
+\usepackage{environ}% http://ctan.org/pkg/environ
+
+
+
+		\newcolumntype{s}{>{\hsize=.5\hsize}X}
+
+\begin{document}
+%%
+%% Import definitions from definition.tex; all definitions can be restated multiple times
+%%
+
+
+%%
+%% End Definitions
+%%
+
+
+
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\section*{Lesson Planning}
+
+This worksheet is designed to guide you through the lesson-planning processes. Creating a good lesson
+plan takes a lot of work, but many of the steps will become second-nature.
+
+\begin{enumerate}
+	\item \textbf{Topic.} What are the topic(s) of the lesson?
+
+		You can use single words like ``Derivatives'' or goal-like phrases like ``learn how to use logarithms
+		to compute difficult derivatives''.
+	\vspace{\stretch{1}}
+
+	\item \textbf{Context.} List some contextual factors that might
+		affect your lesson? (E.g., Length of class period? Number of
+		students? First day of class/day before midterm/etc.? New
+		topic/building on previous topic?)
+	\vspace{\stretch{1}}
+
+	\item \textbf{Self-justification.} Write a short justification
+	of why this topic matters. Consider the following questions as
+	you answer: Why is this topic important to you? Why would it be
+	important to the students? What can people who know this topic
+	do that others cannot?
+	\vspace{\stretch{2}}
+	\newpage
+
+	\item \textbf{Learning Objectives.} 
+		\begin{enumerate}
+			\item Create at least two learning objectives for your lesson.
+				Use verbs from the list of Learning Objectives Verbs (in the Resources section at the end of this packet).
+
+			\item Annotate each objective with (i) the context
+			they should be demonstrating the skill (e.g.,
+			after this lesson/on a written exam/etc.) and
+			(ii) how could you measure whether a student
+			has achieved the objective?
+
+		\item[\bfseries Objective 1:] ~
+			\vspace{\stretch{.5}}
+		\item[\bfseries Objective 2:] ~
+			\vspace{\stretch{.5}}
+		\end{enumerate}
+
+	\item \textbf{Activities Brainstorm.} List an activity you could
+	do in class to achieve each objective. Annotate your activity
+	with (i) how much time would it take, (ii) what you would be
+	doing during the activity, (iii) what the students would be
+	doing during the activity.
+	\vspace{\stretch{1}}
+
+	\newpage
+	\item \textbf{Plan your lesson.}
+
+		\begin{tabularx}{\textwidth}{|s|X|s|}
+			\hline
+			Date & Title & Class Duration\\
+			\hline
+			\rule[-.3\baselineskip]{0pt}{1.5cm}~&~&~\\
+			\hline
+		\end{tabularx}
+		
+		\begin{tabularx}{\textwidth}{|X|}
+			\hline
+			Objectives\\
+			\hline
+			\begin{itemize}
+				\item ~
+
+				\rule[-.3\baselineskip]{0pt}{1.5cm}~
+				\item ~
+
+				\rule[-.3\baselineskip]{0pt}{1.5cm}~
+			\end{itemize}\\
+			\hline
+		\end{tabularx}
+		
+		\begin{tabularx}{\textwidth}{|c|X|}
+			\hline
+			Timestamp & Activity\\
+			\hline
+				\rule[-.3\baselineskip]{0pt}{3.2cm}~ & ~\\
+			\hline
+				\rule[-.3\baselineskip]{0pt}{3.2cm}~ & ~\\
+			\hline
+				\rule[-.3\baselineskip]{0pt}{3.2cm}~ & ~\\
+			\hline
+				\rule[-.3\baselineskip]{0pt}{3.2cm}~ & ~\\
+			\hline
+		\end{tabularx}
+		
+		\begin{tabularx}{\textwidth}{|X|}
+			\hline
+			Notes\\
+			\hline
+				\rule[-.3\baselineskip]{0pt}{3cm}~\\
+			\hline
+		\end{tabularx}
+
+	\newpage
+	We improve at teaching the same way that students learn---with practice and feedback. Reflection is a way
+	to give ourselves feedback so that we can improve even if someone wasn't there to see our lesson.
+
+	\item \textbf{Reflect.} 
+	\begin{enumerate}
+		\item What were one or two highlights/things that went well during the lesson?
+			\vspace{\stretch{1}}
+		\item What could be changed to improve this lesson next time? 
+			\vspace{\stretch{1}}
+		\item Did my lesson live up to my expectations? Why?
+			\vspace{\stretch{1}}
+	\end{enumerate}
+\end{enumerate}
+
+\newpage
+\section*{Resources}
+\subsection*{Learning Objectives Verbs}
+When writing learning objectives you should use verbs that are specific and measurable. For example, 
+the objective ``Students will \emph{understand} examples of\ldots'' is difficult to measure, but
+``Students will \emph{produce} examples of\ldots'' can be measured by asking them to produce an example and
+seeing if they can!
+
+What follows is a list of verbs that can be used when building learning objectives. They are categorized by the levels of 
+\href{https://en.wikipedia.org/wiki/Bloom\%27s_taxonomy}{Bloom's Taxonomy of Educational Objectives}.
+
+\begin{enumerate}
+	\item[\bfseries Knowledge] The successful student will recognize or recall learned information.
+
+		\vspace{.1cm}
+		~\begin{tabularx}{.7\textwidth}{|XXXX|}
+			\hline
+			list & record & underline & state\\
+			define & arrange & name & relate\\
+			describe & tell & recall & memorize\\
+			recall & repeat & recognize & label\\
+			select & reproduce &&\\\hline
+		\end{tabularx}
+		\vspace{.1cm}
+	\item[\bfseries Comprehension] The successful student will restate or interpret information in their own words.
+
+		\vspace{.1cm}
+		~\begin{tabularx}{.7\textwidth}{|XXXX|}
+			\hline
+explain & describe & report & translate\\
+express & summarize & identify & classify\\
+discuss & restate & locate & compare\\
+discuss & review & illustrate & tell\\
+critique & estimate & reference & interpret\\
+			reiterate&&&\\\hline
+		\end{tabularx}
+		\vspace{.1cm}
+	\item[\bfseries Application] The successful student will use or apply the learned information.
+
+		\vspace{.1cm}
+		~\begin{tabularx}{.7\textwidth}{|XXXX|}
+			\hline
+apply & sketch & perform & use\\
+solve & respond & practice & construct\\
+role-play & demonstrate & conduct & execute\\
+			complete & dramatize & employ&\\\hline
+		\end{tabularx}
+		\vspace{.1cm}
+	\item[\bfseries Analysis] The successful student will examine the learned information critically.
+
+		\vspace{.1cm}
+		~\begin{tabularx}{.7\textwidth}{|XXXX|}
+			\hline
+	analyze & inspect & test & distinguish\\
+categorize & critique & differentiate & catalogue\\
+diagnose & appraise & quantify & extrapolate\\
+calculate & measure & theorize & experiment\\
+			relate & debate&&\\\hline
+		\end{tabularx}
+		\vspace{.1cm}
+	\item[\bfseries Synthesis] The successful student will create new models using the learned information.
+
+		\vspace{.1cm}
+		~\begin{tabularx}{.7\textwidth}{|XXXX|}
+			\hline
+develop & revise & compose & plan\\
+formulate & collect & build & propose\\
+construct & create & establish & prepare\\
+design & integrate & devise & organize\\
+			modify & manage&&\\\hline
+		\end{tabularx}
+		\vspace{.1cm}
+	\item[\bfseries Evaluation] The successful student will assess or judge the value of learned information.
+
+		\vspace{.1cm}
+		~\begin{tabularx}{.7\textwidth}{|XXXX|}
+			\hline
+review & appraise & choose & justify\\
+argue & conclude & assess & rate\\
+compare & defend & score & evaluate\\
+			report on & select & interpret &
+			investigate \\ measure & support&&\\\hline
+		\end{tabularx}
+		\vspace{.1cm}
+\end{enumerate}
+
+\newpage
+\subsection*{Dee Fink's Situational Factors to Consider}
+
+Before coming up with learning objectives, consider the various contexts in which
+your lesson will occur by answering the following questions from Dee Fink.
+
+\begin{enumerate}
+	\item \textbf{Specific Context of the Teaching/Learning Situation}
+
+How many students are in the class? Is the course lower division, upper division, or
+graduate level? How long and frequent are the class meetings? How will the course be
+delivered: live, online, or in a classroom or lab? What physical elements of the learning
+environment will affect the class?
+
+\item \textbf{General Context of the Learning Situation}
+
+What learning expectations are placed on this course or curriculum by: the university,
+college and/or department? the profession? society?
+
+\item \textbf{Nature of the Subject}
+
+Is this subject primarily theoretical, practical, or a combination? Is the subject primarily
+convergent or divergent (e.g., are there multiple, persistent ``schools of thought'' or does the field
+come to a consensus on a particular paradigm)? Are there important changes or controversies occurring within the
+field?
+
+\item \textbf{Characteristics of the Learners}
+
+What is the life situation of the learners (e.g., working, family, professional goals)? What
+prior knowledge, experiences, and initial feelings do students usually have about this
+subject? What are their learning goals, expectations, and preferred learning styles?
+
+\item \textbf{Characteristics of the Teacher}
+
+What beliefs and values does the teacher have about teaching and learning? What is
+his/her attitude toward: the subject? students? What level of knowledge or familiarity does
+s/he have with this subject? What are his/her strengths in teaching?
+\end{enumerate}
+
+\subsection*{Dee Fink's Six Dimensions of Significant Learning}
+
+Dee Fink's six dimensions of significant learning help break down the question:
+\begin{quote}
+	\emph{
+		A year (or more) after this course is over, I want and hope that students will\ldots.}
+\end{quote}
+
+The dimensions\footnote{These aren't phrased exactly how Dee Fink phrased them.} are
+\begin{itemize}
+	\item[\textbf{Foundational}] What information/ideas are important to \textbf{understand and remember}? 
+	\item[\textbf{Application}] What thinking/skills should a student \textbf{acquire}?
+		Critical thinking, in which students analyze and evaluate? Creative thinking, in which students imagine and create?
+		Practical thinking, in which students solve problems and make decisions?
+
+		What important skills do students need to gain?
+
+		Do students need to learn how to manage complex projects?
+
+	\item[\textbf{Integration}] What ideas should students \textbf{connect} with their other courses/profession/life?
+
+	\item[\textbf{Human}] What should students learn about themselves? How should students \textbf{interact} with each other? 
+
+	\item[\textbf{Caring}] What changes do you hope for in the way students \textbf{feel}? In their interests? In their ideas?
+
+	\item[\textbf{Meta}] Learning how to learn. What would you like students to learn about being a good student in a course like yours?
+		About learning this particular subject? About how to become a self-directed learner?
+\end{itemize}
+
+\newpage
+\subsection*{Sample Lesson Plan for MAT136\footnote{Essential questions and Objectives from Professor Mayes-Tang, 2019.}}
+
+\paragraph{Essential Questions}
+\begin{itemize}
+	\item	Why is it possible for an infinite sum to equal a finite value?
+	\item How do we add an infinite number of numbers?
+	\item Why are problems easier to solve when they involve polynomials or
+`infinite polynomials'?
+	\item How can we represent arbitrary functions as infinite polynomials?
+	\item How can tools from calculus be used to make sense of the infinite?
+\end{itemize}
+
+		\begin{tabularx}{\textwidth}{|s|X|s|}
+			\hline
+			Date & Title & Class Duration\\
+			\hline
+			%\rule[-.3\baselineskip]{0pt}{1cm}
+			Jan. 1, 2022& Geometric Series & 50 min\\
+			\hline
+		\end{tabularx}
+		
+		\begin{tabularx}{\textwidth}{|X|}
+			\hline
+			Objectives\\
+			\hline
+			Students should be able to\ldots
+			\begin{itemize}
+				\item Define and identify geometric sequences, finite sums, and series
+				\item Compute the sum of finite geometric series and infinite geometric
+				series
+				\item Quickly identify whether a geometric series converges or diverges
+				\item Prove the formula for the $n$th partial sum of a geometric series by
+				computing
+				\item Translate descriptions of accumulating quantities into algebraic sums
+				and series, including choosing appropriate indices
+			\end{itemize}\\
+			\hline
+		\end{tabularx}
+		
+		\begin{tabularx}{\textwidth}{|c|X|}
+			\hline
+			Timestamp & Activity\\
+			\hline
+				12:10 (7min) & 
+				\begin{minipage}{\linewidth}~\\
+				\textbf{Think, Pair-share:} Slice the cake example. You brought a cake
+				to a birthday party with you and your friends, but more people keep showing up. You keep slicing the remaining cake in half
+				to make sure there's cake left for new arrivals.
+
+				Discussion questions: will you need more than one cake to feed the guests? Will you use all of the cake? Write a formula
+					for the size of the $n$th slice.
+					\\[-.1cm]
+				\end{minipage}
+				\\
+			\hline
+				12:17 (4min) & \textbf{Mini-lecture:} Summation-notation review.\\
+			\hline
+				12:21 (5min)& \textbf{Group work:} Write a formula \emph{using summation notation} for the
+				total amount of cake given out after the $n$th slice is given out.\\
+			\hline
+				12:26 (15min) & 
+				\begin{minipage}{\linewidth}~\\
+					\textbf{Class discussion:} Get several examples of summation formulas using \emph{different index variables}
+					on the board; make sure some start at index $0$ and others at index $1$; make sure at least one is incorrect.
+
+					Ask students to discuss with neighbour which examples are correct/incorrect.
+					\\[-.1cm]
+				\end{minipage}
+				\\
+			\hline
+				 12:31 (4min) & \textbf{Short group work:} Ask the class what for a formula for how much cake \emph{remains} after the $n$th
+				 piece is distributed. Have them work with their neighbour to use this information to find a closed-form representation
+				 of their summation formula.\\
+			\hline
+				 12:35 (4min) & \textbf{Student Checkin:} Ask how students are feeling about the work so far and if anyone
+				 has seen the types of formulas we've come up with before.\\
+			\hline
+				 12:39 (15min) & \textbf{Guided worksheet:} Project the worksheet that builds up to the formula for a
+ 				partial and infinite geometric series. Have students work through the worksheet in small groups.\\
+			\hline
+				 12:54 (6min) & \textbf{Mini-lecture/discussion:} Dialog with the class how their new formula can be used
+				 to answer the Cake question. Ask what happens when $r\geq 1$ is plugged in the formula they got.
+				 Emphasize the need to do ``sanity checks'' in math even when you've derived a formula.\\
+			\hline
+		\end{tabularx}
+		
+		\begin{tabularx}{\textwidth}{|X|}
+			\hline
+			Notes\\
+			\hline
+				The important part of this lecture is that students understand that they can \textbf{solve problems
+				themselves by thinking}. That is, the formula at the end should be de-emphasized. If students
+				come to class having already memorized
+				the formula, encourage them to solve the Cake problem without the formula.\\
+			\hline
+		\end{tabularx}
+
+\newpage
+\subsection*{Teaching Toolbox}
+Below is a list of teaching activities taken from the U of T Calculus Community of Practice Guidebook.
+\begin{multicols}{2}
+%% \addtoolboxitem{Title}{What is it?}{Variants}{Uses}
+
+\addtoolboxitem{Timed Think}
+{Pose a question, give the students a set time 
+to think about the answer silently, then ask the question again and 
+call on a student to answer it.}
+{Timed group discussion, timed pair
+discussion, untimed lecture pause (ie, pause lecture until enough
+hands are raised).}
+{In the case of a silent class, this will generally
+force an answer from the room. In feedback, students often want
+more time to think about a problem after it is asked.}	
+
+
+\addtoolboxitem{Think-Pair-Share (TPS)}
+{With a question posed, students 
+think silently about an answer. Then they pair up, and share their 
+response with their neighbour.}
+{Explain instead of share, 
+Think-Group-Share, Think-Pair-Share 
+with a classroom voting system (Think-Vote-Share-Vote), 
+repeated Think-Pair-Share-Think-Pair-Share, Think-Pair-Share where during the "Pair" step the student must find a classmate who has a different answer to them.}
+{This is the crux of active learning, 
+and should be used for simple, conceptual questions, not 
+long computational question.}
+
+\addtoolboxitem{Punctuated Lecture}
+{A fast-paced lecture, where at the end of 
+every slide there is a comprehension-style question, such as 
+\enquote{why does this computation work?}, \enquote{explain 
+this step}. The question is then worked through using 
+\textbf{TPS}.}
+{Questions can be posed in an interactive voting system, see also:
+\textbf{Going Through the Steps}}
+{This is a good technique for getting 
+through material that is emphasized in class, as opposed 
+to reviewing pre-class material. It combos well with 
+timed thinks and TPS.}
+
+\addtoolboxitem{Free-For-All Online Discussion}
+{A class-wide open discussion, where 
+any student can contribute text or pictures to a forum-style 
+tool. This can be done using TopHat, Google Docs, or Quercus.}
+{Timed responses, group submission, 
+see also: \textbf{Write \& Quiz}, \textbf{Write the Test}, 
+and \textbf{1-Minute Essay}.}
+{This can be used for getting a lot of ideas 
+fast, and to consolidate student solutions for everyone 
+to see and use later in studying.}
+
+\addtoolboxitem{1-Minute Essay}
+{Students write a 1-minute essay 
+linking concepts, explaining a concept, or summarizing 
+a concept learned in class. This can be done with 
+or without a specific prompt.}
+{5-minute essay, 1-minute paragraph, 
+writing in groups, 1-minute list, end-of-class summary. See 
+also: \textbf{ice cream sandwich}, \textbf{write \& quiz}, 
+and \textbf{free-for-all discussion}.}
+{This activity is a good conclusion to a 
+lecture, module, or other topic. Walking around to pick 
+students to read their sentences out loud to their 
+neighbours can also be used to build comfort 
+within a group.}
+
+\addtoolboxitem{Fill-In Blanks}
+{A short, fill-in-the-blanks 
+pop-quiz, either on the board, on a slide, or through 
+an interactive classroom response system.}
+{Giving the word possibilities, see also: \textbf{1-minute essay}}
+{This is a good activity to start a 
+class or a topic, and to make sure that everyone 
+has done the reading, is on the same page, 
+and is ready to start learning.}
+
+\addtoolboxitem{Write \& Quiz}
+{Students come up with a question, 
+then partner up and quiz each other.}
+{Larger groups sharing the questions, forcing questions to be
+conceptual or computational. See also: \textbf{free-for-all
+discussion}, \textbf{write the test}, \textbf{paper passaround}.}
+{This is a good activity when there is a lot 
+of relatively straightforward material that would take a long 
+time to go over, but should be spot-checked. This activity 
+also gets students to think about what questions could appear 
+on tests.}
+
+\addtoolboxitem{Concept Map}
+{A concept map is a directed 
+or undirected graph with concepts for nodes and 
+edges for connections between them. Edges should be labeled. 
+The activity is to make a concept map.}
+{Students can get: list of concepts, 
+the concept map without edges, or the concept map 
+with unlabelled edges.}
+{This is an excellent review-session 
+tool, as it takes up the entire class, and can cover a 
+lot of material. The main goal of the activity is to 
+introduce students to the idea, not to finish the map.}
+
+\addtoolboxitem{Critique History \& News}
+{A short lesson on the origins 
+of the course content, or a news clipping related 
+to it. The more primary sources, the better.}
+{Having students see the 
+primary source and critique it.}
+{Some students love this, some hate 
+it, but it can be used to show to students that math 
+was always difficult, and that other people also 
+make mistakes.}
+
+\addtoolboxitem{Going Through the Steps}
+{Write a sequence of steps to solve 
+a problem, and go through them one by one using other 
+teaching-toolbox tools.}
+{Handout with steps, allow 
+students to find the correct order of the steps. 
+See also: \textbf{punctuated lecture}, 
+\textbf{think-pair-share}.}
+{This is a good activity to use 
+to teach students a specific problem-solving strategy.}
+
+\addtoolboxitem{The Tommy Question}
+{Tommy writes an incorrect or incomplete solution to a problem, 
+and the students need to fix the solution.}
+{Use previous exam solutions, have students grade the response, 
+let students address their explanation to Tommy}
+{This is a good activity to target subtle misconceptions and 
+to highlight common pitfalls students may encounter}
+
+\addtoolboxitem{Round Robin}{Students get into groups and take turns
+highlighting key points from the lecture or course content. Possible
+variant: \textbf{Playing Darts}---Students shout concepts related to
+the material, and the
+instructor writes them down on the board. Finish with a follow-up at the end of class outlining what was and wasn't covered in class. 
+
+Pairs well with a \textbf{timed think}}
+{This activity can be an opener and a closer, and reminds 
+students that they are also responsible for things not covered 
+in class.}{This is a good activity to use during review sessions when drumming up concepts from the past is important.}
+
+\addtoolboxitem{Ice Cream Sandwich}
+%(AKA: neapolitan ice-cream)
+{Students write three things: something they've 
+mastered in the unit, something they're struggling with, and something that was cleared up}{Any triple of questions can work!}{Student reflection, seeing learning as a dynamic process.}
+
+\addtoolboxitem{Draw the Definition/Theorem}{Provide the students with a definition or theorem and have them illustrate this definition or theorem. Their drawing could be of an explicit example which works, or something more general.}{Provide the students with a definition or theorem and a sketch. Have students fill in anything which is missing, and have them colour-code parts of the definition or theorem and colour the corresponding part of the picture that colour as well.}{Allows students to engage with a definition or theorem and build some intuition about the concept.}
+
+\addtoolboxitem{Geogebra Applets}{Geogebra has many free applets available on its platform. It is possible to find many applets which are interactive and allow students to interact with different concepts. Be sure to test out the applet before use to ensure it is what you're looking for!}{There are a variety of different applets available. Some of the applets can be an entire activity on their own, and others can be a supplement to help you illustrate an idea to students.}{Allows students to build intuition behind different concepts in a visual, yet interactive way.}
+
+\addtoolboxitem{Jigsaw}{Break the class into groups and have each group solve a different part of a problem. At the end, every one comes together to synthesize their solutions to solve the main problem.}{This can be used to fill in tables, to see patterns emerging through examples, or to solve a larger problem as a group.}{This can be used to explore theorems or definitions and build intuition.}
+
+\addtoolboxitem{Gameshow}{For review, have large a variety of questions prepared which you will display one at a time. Students will answer questions, and will keep track of their longest streak of correct answers.}{Could have the class break up into teams to play, or change the format to mimic a real game show (for example, Jeopardy).}{A fun way to engage students during a review class before a midterm or final exam.}
+
+\addtoolboxitem{Paper Passaround}{In groups, students write things on papers, and exchange with other groups. The other group reads, and responds on the page.}{Some examples: each group solves one of three problems on the board, and then critiques another group's solution. See also: \textbf{Write \& Quiz}}{This is a good physical writing exercise that 
+lets students see and critique how math can be communicated in writing.}
+
+\addtoolboxitem{Run the Test}{Students play the role of the instructor in writing, grading, or helping students during a test-environment. For example, students may be given a solved test to critique, or could be asked to give advice to students before, after, or during the test (see: \textbf{Tommy question})}{An online tool to collect student-made test questions to create a question bank can be useful.}{This exercise can be used to demystify the test, and to highlight common mistakes. See also: \textbf{Write \& Quiz}, \textbf{Free-For-All Online Discussion}}
+
+\end{multicols}
+
+\subsection*{Additional Resources}
+Additional resources (including a copy of this document) can be found at \url{https://github.com/siefkenj/teaching-resources}.
+
+\begin{center}
+	\qrcode[height=1in]{https://github.com/siefkenj/teaching-resources}
+\end{center}
+		
+\end{document}
