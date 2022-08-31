@@ -1,7 +1,7 @@
 # teaching-resources
 Collection of teaching resources
 
-## [U of T Calculus Community of Practice Handbook](https://github.com/AssafBarNatan/CoP-Planner/raw/main/CoP-Lesson-Plan-ToPrint.pdf)
+## U of T Calculus Community of Practice Handbook
 
 The U of T Calculus Community of Practice put together a useful [handbook](https://github.com/AssafBarNatan/CoP-Planner/raw/main/CoP-Lesson-Plan-ToPrint.pdf)
 with teaching techniques and reflection prompts (for instructors).
